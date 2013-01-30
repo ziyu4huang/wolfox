@@ -1,0 +1,25 @@
+--- !<fbs_config>
+SS_STEP:
+  rcext_rctyp_TC: TA_RCXT
+  rcext_rctyp_WC: TA_RCXT
+  sdfgen_rctyp_TC_CONST: TA_SDFGEN
+  sdfgen_rctyp_WC_CONST: TA_SDFGEN
+  sta_rctyp_WC_CONST: TA_STA
+  sta_rctyp_WC_CONST: TA_STA
+rcext_rctyp_TC.TEMP: T25C
+rcext_rctyp_WC.TEMP: N25C
+sdfgen_rctyp_TC_CONST.SDF_FILE: output.sdf.gz
+sdfgen_rctyp_TC_CONST.SS_RELY_JOB:
+- rcext_rctyp_TC
+ML_STRING: |
+  abc ddfadf dsafasdf dasf asdfsd fsdaf sadf
+  def dasf sadfda fasd fsda
+  ghi adfasdf sdaf asdfasd fasf asdf asdfsda fasdf
+  asfdf sadfs af
+VERILOG: test.v.gz
+DESIGN_FILE: test.def.gz
+QUEUE_OPTION:
+  sge_raw: -ul pt=1,xt=2
+  queue: linux.q
+  resource: xyz,zdf,gd
+  mail_notify: ziyu

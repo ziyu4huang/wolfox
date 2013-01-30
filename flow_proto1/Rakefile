@@ -1,0 +1,22 @@
+require_relative 'fbs'
+
+$fbs = fbs_load_config "config.yaml"
+
+task :default do 
+	puts "do nothing yet"
+end
+
+#create task by flow step
+
+$fbs.each_step { |step|
+	puts "create step #{step.path}"
+	desc "build task step #{step.path}"
+	task step.path do |t,args|
+		#t.comment "build task step #{step.path}"
+		#puts "[INFO] run task #{t.name}"
+	end
+}
+
+task :test do
+	puts "do fbs system unit test"
+end
