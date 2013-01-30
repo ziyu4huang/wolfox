@@ -1,5 +1,6 @@
 require 'yard'
 
+include YARD
 YARD::Parser::SourceParser.after_parse_file do |parser|
 	puts "#{parser.file} is #{parser.contents.size} characters"
 
@@ -16,8 +17,46 @@ class MyModuleHandler < YARD::Handlers::Ruby::Base
 end
 
 #YARD.parse('lib/**/*.rb')
-p = YARD.parse('flow_def.rb')
 
+
+class RegexHandler < Handlers::Ruby::Base
+  handles %r{^if x ==}
+end
+ast = Parser::Ruby::RubyParser.parse("if x == 2 then true end").ast
+
+puts ast
+
+Registry.clear
+YARD.parse('flow_def.rb')
+
+puts "0000"
+puts Registry.at('#test').to_s
+puts "111111111111111111"
+puts Registry.at('#QUEUE').docstring
+puts "22222222222222"
+puts Registry.at('Foo#test').docstring
+
+puts "3"*10
+puts Registry.at('Foo').attributes
+
+puts "4"*10
+puts Registry.at('Foo#mode').docstring
+
+puts "5"*10
+puts Registry.at('Foo#mode').source
+
+puts "6"*10
+puts Registry.at('#QUEUE').source
+
+puts "7"*10
+puts Registry.at('#QUEUE').signature
+
+puts "8"*10
+puts Registry.at('#QUEUE').files
+puts "9"*10
+puts Registry.at('#QUEUE').namespace
+puts "A"*10
+puts Registry.at('#QUEUE').tags
 
 # prints:
 #"lib/foo.rb is 1240 characters"
