@@ -2,6 +2,7 @@
 * text=auto
 *.sh  eol=lf
 *.rb  eol=lf
+*.yaml eol=lf
 
 # Custom for Visual Studio
 *.cs     diff=csharp
