@@ -2,6 +2,7 @@
 ## Eclipse
 #################
 
+*.log
 *.pydevproject
 .project
 .metadata
@@ -161,3 +162,5 @@ pip-log.txt
 
 # Mac crap
 .DS_Store
+
+.ipynb_checkpoints
