@@ -155,7 +155,7 @@ if __name__ == "__main__" and _int_mode is False:
 # %%RUN_CELL train one epoch
 if _int_mode is True:
     os.chdir('c:\\ml\\study_code_on_github')
-    epoch = 3
+    epoch = 4
     saved_model_fpath = os.path.join('saved_model', f"vae_MNIST_epoch_{epoch}.ckpt")
 
 # %%RUN_CELL train one epoch
@@ -172,8 +172,8 @@ if _int_mode is True:
     with torch.no_grad():
         sample = torch.randn(64, 20).to(device)
         sample = model.decode(sample).cpu()
-        save_image(sample.view(64, 1, 28, 28),
-                    'results/sample_' + str(epoch) + '.png')
+        save_image(sample.view(64, 1, 28, 28), 
+                    'results/sample_' + str(epoch) + '.png', padding=2,)
 
 # %%RUN_CELL see how test work
     model.eval()
