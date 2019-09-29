@@ -1,6 +1,11 @@
 # -*- coding: utf-8 -*-
 """
 NLP From Scratch: Translation with a Sequence to Sequence Network and Attention
+
+https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html
+
+https://github.com/spro/practical-pytorch/blob/master/seq2seq-translation/seq2seq-translation.ipynb
+
 *******************************************************************************
 **Author**: `Sean Robertson <https://github.com/spro/practical-pytorch>`_
 
@@ -89,8 +94,13 @@ And for more, read the papers that introduced these topics:
 
 **Requirements**
 """
-# %%RUN_CELL
+# %%RUN_CELL initialize
 from __future__ import unicode_literals, print_function, division
+import numpy as np
+import matplotlib.ticker as ticker
+import matplotlib.pyplot as plt
+import math
+import time
 from io import open
 import unicodedata
 import string
@@ -286,11 +296,13 @@ def prepareData(lang1, lang2, reverse=False):
     print(output_lang.name, output_lang.n_words)
     return input_lang, output_lang, pairs
 
+# %%RUN_CELL process data
+
 
 input_lang, output_lang, pairs = prepareData('eng', 'fra', True)
 print(random.choice(pairs))
 
-# %%CELL
+# %%RUN_CELL define model
 
 ######################################################################
 # The Seq2Seq Model
@@ -542,11 +554,13 @@ def tensorsFromPair(pair):
 # choose to use teacher forcing or not with a simple if statement. Turn
 # ``teacher_forcing_ratio`` up to use more of it.
 #
-
+# :while expression:
+#     pass
 teacher_forcing_ratio = 0.5
 
 
-def train(input_tensor, target_tensor, encoder, decoder, encoder_optimizer, decoder_optimizer, criterion, max_length=MAX_LENGTH):
+def train(input_tensor, target_tensor, encoder, decoder, encoder_optimizer, decoder_optimizer,
+          criterion, max_length=MAX_LENGTH):
     encoder_hidden = encoder.initHidden()
 
     encoder_optimizer.zero_grad()
@@ -555,7 +569,8 @@ def train(input_tensor, target_tensor, encoder, decoder, encoder_optimizer, deco
     input_length = input_tensor.size(0)
     target_length = target_tensor.size(0)
 
-    encoder_outputs = torch.zeros(max_length, encoder.hidden_size, device=device)
+    encoder_outputs = torch.zeros(
+        max_length, encoder.hidden_size, device=device)
 
     loss = 0
 
@@ -602,9 +617,6 @@ def train(input_tensor, target_tensor, encoder, decoder, encoder_optimizer, deco
 # This is a helper function to print time elapsed and estimated time
 # remaining given the current time and progress %.
 #
-
-import time
-import math
 
 
 def asMinutes(s):
@@ -677,10 +689,7 @@ def trainIters(encoder, decoder, n_iters, print_every=1000, plot_every=100, lear
 # ``plot_losses`` saved while training.
 #
 
-import matplotlib.pyplot as plt
 plt.switch_backend('agg')
-import matplotlib.ticker as ticker
-import numpy as np
 
 
 def showPlot(points):
@@ -709,7 +718,8 @@ def evaluate(encoder, decoder, sentence, max_length=MAX_LENGTH):
         input_length = input_tensor.size()[0]
         encoder_hidden = encoder.initHidden()
 
-        encoder_outputs = torch.zeros(max_length, encoder.hidden_size, device=device)
+        encoder_outputs = torch.zeros(
+            max_length, encoder.hidden_size, device=device)
 
         for ei in range(input_length):
             encoder_output, encoder_hidden = encoder(input_tensor[ei],
@@ -774,9 +784,12 @@ def evaluateRandomly(encoder, decoder, n=10):
 #    encoder and decoder are initialized and run ``trainIters`` again.
 #
 
+# %%RUN_CELL start training
+
 hidden_size = 256
 encoder1 = EncoderRNN(input_lang.n_words, hidden_size).to(device)
-attn_decoder1 = AttnDecoderRNN(hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
+attn_decoder1 = AttnDecoderRNN(
+    hidden_size, output_lang.n_words, dropout_p=0.1).to(device)
 
 trainIters(encoder1, attn_decoder1, 75000, print_every=5000)
 
@@ -869,3 +882,6 @@ evaluateAndShowAttention("c est un jeune directeur plein de talent .")
 #    -  Save only the Encoder network
 #    -  Train a new Decoder for translation from there
 #
+
+
+#%%
