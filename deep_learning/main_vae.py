@@ -8,6 +8,7 @@ from torch.nn import functional as F
 from torchvision import datasets, transforms
 from torchvision.utils import save_image
 import sys
+import os
 
 
 # %%RUN_CELL
@@ -42,11 +43,11 @@ device = torch.device("cuda" if args.cuda else "cpu")
 
 kwargs = {'num_workers': 1, 'pin_memory': True} if args.cuda else {}
 train_loader = torch.utils.data.DataLoader(
-    datasets.MNIST('data', train=True, download=True,
+    datasets.MNIST('../data', train=True, download=True,
                    transform=transforms.ToTensor()),
     batch_size=args.batch_size, shuffle=True, **kwargs)
 test_loader = torch.utils.data.DataLoader(
-    datasets.MNIST('data', train=False, transform=transforms.ToTensor()),
+    datasets.MNIST('../data', train=False, transform=transforms.ToTensor()),
     batch_size=args.batch_size, shuffle=True, **kwargs)
 
 
@@ -150,16 +151,45 @@ if __name__ == "__main__" and _int_mode is False:
             save_image(sample.view(64, 1, 28, 28),
                        'results/sample_' + str(epoch) + '.png')
 
-# %%RUN_CELL main function
-if _int_mode is True:
-    epoch = 2
-    train(epoch)
 
-# %%RUN_CELL main function
+# %%RUN_CELL train one epoch
+if _int_mode is True:
+    os.chdir('c:\\ml\\study_code_on_github')
+    epoch = 3
+    saved_model_fpath = os.path.join('saved_model', f"vae_MNIST_epoch_{epoch}.ckpt")
+
+# %%RUN_CELL train one epoch
+    epoch = 4
+    train(epoch)
+    test(epoch)
+    saved_model_fpath = os.path.join('saved_model', f"vae_MNIST_epoch_{epoch}.ckpt")
+    torch.save(model.state_dict(), saved_model_fpath)
+
+# %%RUN_CELL train one epoch
+    model.load_state_dict(torch.load(saved_model_fpath))
+
+# %%RUN_CELL review
     with torch.no_grad():
         sample = torch.randn(64, 20).to(device)
         sample = model.decode(sample).cpu()
         save_image(sample.view(64, 1, 28, 28),
                     'results/sample_' + str(epoch) + '.png')
+
+# %%RUN_CELL see how test work
+    model.eval()
+    test_loss = 0
+    with torch.no_grad():
+        for i, (data, _) in enumerate(test_loader):
+            data = data.to(device)
+            recon_batch, mu, logvar = model(data)
+            print("recon_batch: ", recon_batch.size())
+            test_loss += loss_function(recon_batch, data, mu, logvar).item()
+            if i == 0:
+                n = min(data.size(0), 10)
+                comparison = torch.cat([data[:n],
+                                        recon_batch.view(args.batch_size, 1, 28, 28)[:n]])
+                save_image(comparison.cpu(),
+                           'results/reconstruction_' + str(epoch) + '.png', nrow=n)
+                break
 
 #%%
