@@ -82,6 +82,9 @@ def compute_bleu(output, reference):
     cc = SmoothingFunction()
     return sentence_bleu([reference], output, weights=(0.25, 0.25, 0.25, 0.25), smoothing_function=cc.method1)
 
+print("bleu: ", compute_bleu('access', 'accessed'))
+print("bleu: ", sentence_bleu(['consult', 'consults', 'conulting', 'consulted'], 'consult', weights=(0.25, 0.25, 0.25, 0.25), smoothing_function=SmoothingFunction().method1))
+print("bleu: ", compute_bleu('healing', 'heals'))
 
 """============================================================================
 example input of Gaussian_score
@@ -114,6 +117,7 @@ def Gaussian_score(words):
                 if t == i:
                     score += 1
     return score/len(words)
+print("Gaussian_score: ", Gaussian_score(words))
 
 # %%RUN_CELL <2> model
 
@@ -189,19 +193,20 @@ def train(input_tensor, target_tensor, encoder: EncoderRNN, decoder: DecoderRNN,
     use_teacher_forcing = True if random.random() < teacher_forcing_ratio else False
 
     #----------sequence to sequence part for decoder----------#
+
     if use_teacher_forcing:
         # Teacher forcing: Feed the target as the next input
         for di in range(target_length):
-            decoder_output, decoder_hidden, decoder_attention = decoder(
-                decoder_input, decoder_hidden, encoder_outputs)
+            decoder_output, decoder_hidden = decoder(
+                decoder_input, decoder_hidden)
             loss += criterion(decoder_output, target_tensor[di])
             decoder_input = target_tensor[di]  # Teacher forcing
 
     else:
         # Without teacher forcing: use its own predictions as the next input
         for di in range(target_length):
-            decoder_output, decoder_hidden, decoder_attention = decoder(
-                decoder_input, decoder_hidden, encoder_outputs)
+            decoder_output, decoder_hidden = decoder(
+                decoder_input, decoder_hidden)
             topv, topi = decoder_output.topk(1)
             decoder_input = topi.squeeze().detach()  # detach from history as input
 
