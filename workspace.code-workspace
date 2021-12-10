@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "packaging_tutorial"
+		}
+	],
+	"settings": {
+		"terminal.integrated.profiles.windows": {
+			"My PowerShell": {
+				"source": "PowerShell",
+				"icon": "terminal-powershell",
+				"args": [
+					"-NoProfile"
+				],
+				"env": {
+					"PATH": "C:\\WPy64-3880\\git\\bin;C:\\WPy64-3880\\python-3.8.8.amd64;C:\\WPy64-3880\\python-3.8.8.amd64\\Scripts",
+					"PYTHONPATH": "${workspaceFolder}\\src"
+				}
+			}
+		},
+		"terminal.integrated.defaultProfile.windows": "My PowerShell"
+	}
+}
