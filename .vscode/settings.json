@@ -1,9 +1,2 @@
 {
-    "python.dataScience.jupyterServerURI": "http://127.0.0.1:8888/?token=2eef665e6f146a71a3a2a59ac39729872b8e376c2ba60caa",
-    "python.testing.pytestArgs": [
-        "."
-    ],
-    "python.testing.unittestEnabled": false,
-    "python.testing.nosetestsEnabled": false,
-    "python.testing.pytestEnabled": true
 }

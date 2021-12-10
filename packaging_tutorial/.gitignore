@@ -1,0 +1,9 @@
+
+*.pyc
+dist
+.vscode
+*.pyc
+src/*.egg-info
+__pycache__
+.hypothesis
+.eggs

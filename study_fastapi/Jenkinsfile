@@ -1,0 +1,98 @@
+def process_build_info() {
+    def amap = ['something': 'my datas',
+                'size': 3,
+                'isEmpty': false
+                ]
+                    
+    // https://opensource.triology.de/jenkins/pipeline-syntax/globals
+    def cur=[:]
+    cur["flow_uuid"] = env.MLPD_FLOW_UUID
+    cur["BUILD_TAG"] = env.BUILD_TAG
+    cur["WORKSPACE"] = env.WORKSPACE
+    cur["JOB_NAME"] = env.JOB_NAME
+    cur["result"] = currentBuild.result
+    cur["duration"] = currentBuild.duration
+    cur["BuildCauses"] = currentBuild.getBuildCauses()[0]
+    cur["fullDisplayName"] = currentBuild.fullDisplayName
+    cur["absoluteUrl"] = currentBuild.absoluteUrl
+                
+    amap["currentBuild"] = cur
+    //cur["BUILD_NAME"] = "${BUILD_NAME}"
+
+    def build_info_fname = "build_info_${currentBuild.number}.json"           
+    writeJSON file: build_info_fname, json: amap, pretty: 4
+    sh "ls -al"
+}
+
+def NODE_USER = "mlpd60483"
+def ROOT_DIR = "/home/ziyu4huang/jenkin_agent/project_directory"
+
+
+pipeline {
+    agent { label "linux && cpu && ${NODE_USER}"} 
+    
+    parameters {
+        choice(name: 'PLATFORM_FILTER', choices: ['all', 'linux', 'windows', 'mac'], description: 'Run on specific platform')
+        string(name: 'design_name', defaultValue: 'design1', description: 'design name ')
+    }
+    
+    environment {
+        MLPD_FLOW_UUID = UUID.randomUUID().toString()
+    }
+
+    
+    stages {
+        stage('Pepare Project Directory') {
+            agent { label "linux && cpu && ${NODE_USER}" } 
+            steps {
+                sh "mkdir -p ${ROOT_DIR}/${design_name}"
+            }
+        }
+        stage('CPU Run') {
+            agent { label "linux && cpu && ${NODE_USER}" } 
+            steps {
+                dir("${ROOT_DIR}/${design_name}") {
+                    echo "Hello, CPU jobs, trigger by user ${currentBuild.getBuildCauses()[0].userId} ${currentBuild.getBuildCauses()[0].userName}"
+                    sh 'lsb_release -a ; date ; pwd'
+                }
+            }
+            post {
+                always {
+                    dir("${ROOT_DIR}/${design_name}") {
+                        echo "CPU run post check here  (MLPD_FLOW_UUID=${MLPD_FLOW_UUID})"
+                        sh 'pwd'
+                    }
+                }
+            }
+        }
+        stage('GPU Run') {
+            agent { label 'linux && gpu' } 
+            steps {
+                dir("${ROOT_DIR}/${design_name}") {
+                    echo "Hello, GPU, ${design_name}"
+                    sh 'lsb_release -a ; date ; pwd; echo "MLPD_FLOW_UUID = $MLPD_FLOW_UUID"'
+                }
+            }
+            post {
+                always {
+                    dir("${ROOT_DIR}/${design_name}") {
+                        echo "GPU run post check here  (MLPD_FLOW_UUID=${MLPD_FLOW_UUID})"
+                        sh 'pwd'
+                    }
+                }
+            }
+        }
+    }
+    post {
+        always {
+            dir("${ROOT_DIR}/${design_name}") {
+                script {
+                    process_build_info()
+                }
+            }
+        }
+    }
+}
+
+
+

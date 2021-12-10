@@ -1,0 +1,35 @@
+{
+	"folders": [
+		{
+			"path": "packaging_tutorial"
+		},
+		{
+			"path": "python_pattern"
+		},
+		{
+			"path": "try_logging"
+		},
+		{
+			"path": "python_cmdline"
+		},
+		{
+			"path": "study_fastapi"
+		}
+	],
+	"settings": {
+		"terminal.integrated.profiles.windows": {
+			"My PowerShell": {
+				"source": "PowerShell",
+				"icon": "terminal-powershell",
+				"args": [
+					"-NoProfile"
+				],
+				"env": {
+                	"PATH": "C:\\Program Files\\Git\\bin;C:\\WPy64-3880\\python-3.8.8.amd64;C:\\WPy64-3880\\python-3.8.8.amd64\\Scripts",
+					"PYTHONPATH": "src;tests"
+				}
+			}
+		},
+		"terminal.integrated.defaultProfile.windows": "My PowerShell"
+	}
+}
