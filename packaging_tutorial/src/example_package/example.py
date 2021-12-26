@@ -1,3 +1,4 @@
+import example_package
 
 def main():
     print("hello world")
