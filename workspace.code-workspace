@@ -17,6 +17,9 @@
 		},
 		{
 			"path": "asp_study"
+		},
+		{
+			"path": "study_asyncio"
 		}
 	],
 	"settings": {
@@ -33,6 +36,7 @@
 				}
 			}
 		},
-		"terminal.integrated.defaultProfile.windows": "My PowerShell"
+		"terminal.integrated.defaultProfile.windows": "My PowerShell",
+		"powershell.cwd": "/workspaces/wolfox/study_asyncio"
 	}
 }
