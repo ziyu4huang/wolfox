@@ -1,6 +1,7 @@
 #################
 ## Eclipse
 #################
+
 .venv
 *.log
 *.pydevproject
