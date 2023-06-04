@@ -17,11 +17,12 @@
 		},
 		{
 			"path": "asp_study"
-
 		},
 		{
 			"path": "study_asyncio"
-
+		},
+		{
+			"path": "python_ml"
 		}
 	],
 	"settings": {
