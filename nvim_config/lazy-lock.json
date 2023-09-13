@@ -1,0 +1,10 @@
+{
+  "LuaSnip": { "branch": "master", "commit": "ea7d7ea510c641c4f15042becd27f35b3e5b3c2b" },
+  "bufferline.nvim": { "branch": "main", "commit": "9961d87bb3ec008213c46ba14b3f384a5f520eb5" },
+  "completion-nvim": { "branch": "master", "commit": "87b0f86da3dffef63b42845049c648b5d90f1c4d" },
+  "jedi-vim": { "branch": "master", "commit": "338af171ea32bb9d4705429d3aef20735d567c87" },
+  "lazy.nvim": { "branch": "main", "commit": "2a9354c7d2368d78cbd5575a51a2af5bd8a6ad01" },
+  "nim.nvim": { "branch": "master", "commit": "87afde2ae995723e0338e1851c3b3c1cbd81d955" },
+  "nvim-lsp": { "branch": "master", "commit": "cc388d3f6b9c7c943ae2b2dcd46ad470fd257f91" },
+  "nvim-web-devicons": { "branch": "master", "commit": "973ab742f143a796a779af4d786ec409116a0d87" }
+}

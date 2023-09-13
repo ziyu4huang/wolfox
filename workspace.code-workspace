@@ -23,6 +23,9 @@
 		},
 		{
 			"path": "python_ml"
+		},
+		{
+			"path": "study_mojo"
 		}
 	],
 	"settings": {

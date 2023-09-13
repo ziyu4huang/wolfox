@@ -1,0 +1,1 @@
+nim c --debugger:native  --debuginfo --linedir:on ex_json.nim
