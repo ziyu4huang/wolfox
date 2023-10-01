@@ -1,6 +1,7 @@
 # test.py
 import os
 
+
 import mymodule
 """
   what?

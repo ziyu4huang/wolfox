@@ -26,6 +26,12 @@
 		},
 		{
 			"path": "study_mojo"
+		},
+		{
+			"path": "study_rust"
+		},
+		{
+			"path": "study_nim"
 		}
 	],
 	"settings": {
