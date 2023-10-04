@@ -8,9 +8,6 @@
 
 proc callFromNim() {.importc, cdecl.}
 
-
-
-
 when isMainModule:
   echo("Hello, World!")
   # Call the C++ function
