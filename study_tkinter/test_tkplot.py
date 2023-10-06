@@ -1,3 +1,4 @@
+# from https://github.com/TomSchimansky/CustomTkinter/issues/93#issuecomment-1133110202
 import tkinter
 import customtkinter
 
