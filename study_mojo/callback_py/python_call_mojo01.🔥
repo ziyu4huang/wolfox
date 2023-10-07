@@ -1,0 +1,20 @@
+from python import Python
+
+
+struct from_python:
+    @staticmethod
+    def event(o: PythonObject):
+        function_name = o[0].to_string()
+        if function_name == "my_func":
+            Self.my_func(o[1])
+            return
+
+    @staticmethod
+    def my_func(arg: PythonObject):
+        print(arg)
+        print("called hhere")
+
+
+def main():
+    let result = Python.evaluate("['my_func',[123,'hello_world']]")
+    from_python.event(result)
