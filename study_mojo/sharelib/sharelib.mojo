@@ -6,6 +6,7 @@ from sys.intrinsics import external_call
 
 # Types aliases
 #alias c_void = UInt8
+# it's 64 bit platform
 alias c_void = UInt64
 alias c_char = UInt8
 alias c_int = Int32
