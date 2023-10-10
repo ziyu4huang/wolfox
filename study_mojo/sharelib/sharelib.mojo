@@ -24,11 +24,9 @@ let RTLD_NOW = 0x00002
 
 fn main():
     let data = "./libexample.so"
-    #let data = "/home/ziyu4huang/proj/wolfox/study_mojo/sharelib/libexample.so"
     let data_ptr = to_char_ptr(data)
     #let flag: c_int = RTLD_NOW
     let flag: c_int = RTLD_LAZY
-    #let flag: c_int = 0
 
     let hdl = external_call["dlopen", c_void, Pointer[c_char], c_int](data_ptr, flag)
     print("hdl ", hdl)
@@ -38,7 +36,7 @@ fn main():
         let msg = StringRef(error_msg_cstr.bitcast[Int8]())
         print("lib_handler error ", msg)
     else:
-        let error_msg_cstr = external_call["dlerror", Pointer[c_char]]()
+        let a = external_call["dlerror", Pointer[c_char]]()
         print("lib_handler ", hdl)
         let sym_name = to_char_ptr("hello_world")
         let fun_sym = external_call["dlsym", c_void, c_void, Pointer[c_char]](hdl, sym_name)
