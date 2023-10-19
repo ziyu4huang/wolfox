@@ -2,6 +2,7 @@ from algorithm.functional import vectorize
 from memory.unsafe import DTypePointer
 from sys.info import simdwidthof
 
+
 fn main():
     alias size: Int = 17
     alias type = DType.int32
@@ -19,10 +20,11 @@ fn main():
 
     print(p.simd_load[size](0))
     let x = MyInt(7)
-    #print(x)
+    # print(x)
+
 
 struct MyInt:
     var data: Int
+
     fn __init__(inout self, i: Int):
         self.data = i
-
