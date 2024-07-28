@@ -6,8 +6,8 @@ def main():
     from llama_index.core import VectorStoreIndex, SimpleDirectoryReader, Settings
     from llama_index.llms.ollama import Ollama
 
-    #documents = SimpleDirectoryReader("TCRcom", recursive=True).load_data(num_workers=4)
-    documents = SimpleDirectoryReader("data_book", recursive=True).load_data(num_workers=4)
+    documents = SimpleDirectoryReader("TCRcom", recursive=True).load_data(num_workers=10)
+    #documents = SimpleDirectoryReader("data_rag", recursive=True).load_data(num_workers=4)
 
     # bge-base embedding model
     #from llama_index.embeddings.huggingface import HuggingFaceEmbedding
@@ -25,6 +25,13 @@ def main():
 
     # ollama
     Settings.llm = Ollama(model="llama3.1", request_timeout=360.0)
+
+    # global
+    #https://docs.llamaindex.ai/en/stable/module_guides/loading/node_parsers/
+    from llama_index.core import Settings
+    from llama_index.core.node_parser import SentenceSplitter
+    Settings.text_splitter = SentenceSplitter(chunk_size=1024, chunk_overlap=20)
+
 
     index = VectorStoreIndex.from_documents(
         documents,
