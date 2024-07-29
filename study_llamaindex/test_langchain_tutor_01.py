@@ -1,5 +1,8 @@
 #!/usr/bin/env python
-#https://python.langchain.com/v0.2/docs/tutorials/llm_chain/
+
+# https://python.langchain.com/v0.2/docs/tutorials/llm_chain/
+# require pip
+# pip install langchain fastapi langchain_openai langserve[all]
 from typing import List
 
 from fastapi import FastAPI
@@ -18,7 +21,7 @@ prompt_template = ChatPromptTemplate.from_messages([
 # 2. Create model, change to Ollama compatible ,  
 # see https://python.langchain.com/v0.2/docs/integrations/chat/openai/
 # api_key must give to avoid error out
-model = ChatOpenAI(base_url="http://127.0.0.1:11434/v1", api_key="any")
+model = ChatOpenAI(base_url="http://127.0.0.1:11434/v1", model_name="llama3.1", api_key="any")
 
 # 3. Create parser
 parser = StrOutputParser()
