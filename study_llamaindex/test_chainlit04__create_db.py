@@ -32,7 +32,8 @@ def create_vector_database():
     #len(loaded_documents)
 
     # Split loaded documents into chunks
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=40)
+    #text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=40)
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=4096, chunk_overlap=100)
     chunked_documents = text_splitter.split_documents(loaded_documents)
     #len(chunked_documents)
     #chunked_documents[0]

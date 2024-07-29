@@ -15,19 +15,30 @@ from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
 import chainlit as cl
 from langchain.chains import RetrievalQA
+import pickle
 
 ABS_PATH: str = os.path.dirname(os.path.abspath(__file__))
 DB_DIR: str = os.path.join(ABS_PATH, "db")
 
 
+file_name = os.path.splitext(os.path.basename(__file__))[0]
+
 # Set up RetrievelQA model
-if False:
-    rag_prompt_mistral = """
-input_variables=['context', 'question'] metadata={'lc_hub_owner': 'rlm', 'lc_hub_repo': 'rag-prompt-mistral', 'lc_hub_commit_hash': '5065c9030dae8e9b27fa0dbf6d9fa3a516d26978adc580c95b2ed1541dc366fa'} template="<s> [INST] You are an assistant for question-answering tasks. Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise. [/INST] </s> \n[INST] Question: {question} \nContext: {context} \nAnswer: [/INST]"
-"""
+if os.path.isfile(file_name + '.prompt.pickle'):
+    print("restore prompt", )
+    with open(file_name + '.prompt.pickle', "rb") as file:
+        rag_prompt_mistral = pickle.load(file)
+    print(rag_prompt_mistral)
+    print(type(rag_prompt_mistral))
 else:
+    #https://docs.smith.langchain.com/how_to_guides/prompts/pull_push_a_prompt#pull-a-prompt-and-use-it
+    print("pull prompt")
     rag_prompt_mistral = hub.pull("rlm/rag-prompt-mistral")
-    print("down load rag_prompt_mistral", rag_prompt_mistral)
+    print(rag_prompt_mistral)
+    print(type(rag_prompt_mistral))
+    with open(file_name+'.prompt.pickle', "wb") as file:
+        pickle.dump(rag_prompt_mistral, file)
+    #print("down load rag_prompt_mistral", rag_prompt_mistral)
 
 ollama_model = "mistral"
 def load_model():
