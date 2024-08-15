@@ -9,10 +9,23 @@ readme = "README.md"
 python = "^3.10"
 langchain = "^0.2.14"
 chainlit = "^1.1.402"
+python-dotenv = "^1.0.1"
+langchain-groq = "^0.1.9"
+torch = {version = "^2.4.0+cpu", source = "pytorch_cpu"}
+transformers = "^4.44.0"
+langchain-community = "^0.2.12"
+langgraph = "^0.2.3"
 
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
+jupyterlab = "^4.2.4"
+
+
+[[tool.poetry.source]]
+name = "pytorch_cpu"
+url = "https://download.pytorch.org/whl/cpu"
+priority = "explicit"
 
 [build-system]
 requires = ["poetry-core"]

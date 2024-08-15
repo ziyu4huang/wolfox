@@ -2,6 +2,8 @@
 ## Eclipse
 #################
 
+.env
+.env_trace
 .venv
 *.log
 *.pydevproject
