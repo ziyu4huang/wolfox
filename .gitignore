@@ -165,3 +165,7 @@ pip-log.txt
 .DS_Store
 
 .ipynb_checkpoints
+
+*-venv/
+.zig-cache/
+bin/
